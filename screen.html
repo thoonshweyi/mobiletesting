@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Change Orientation</title>
+  <style>
+    button {
+      padding: 10px 20px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+
+  <button onclick="changeOrientation()">Change to Landscape</button>
+
+  <script>
+    function changeOrientation() {
+      // Request fullscreen first
+      const elem = document.documentElement;
+      if (elem.requestFullscreen) {
+        elem.requestFullscreen().then(() => {
+          lockLandscape();
+        }).catch((err) => {
+          alert("Fullscreen error: " + err.message);
+        });
+      } else {
+        alert("Fullscreen API not supported.");
+      }
+
+      function lockLandscape() {
+        if (screen.orientation && screen.orientation.lock) {
+          screen.orientation.lock("landscape").then(() => {
+            console.log("Orientation locked to landscape.");
+          }).catch((err) => {
+            alert("Orientation lock failed: " + err.message);
+          });
+        } else {
+          alert("Orientation lock not supported in this browser.");
+        }
+      }
+    }
+  </script>
+
+</body>
+</html>
